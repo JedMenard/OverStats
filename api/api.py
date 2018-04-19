@@ -12,7 +12,7 @@ async def testing(loop, battletag):
     data = {}
 
     async with aiohttp.ClientSession(
-            connector=aiohttp.TCPConnector(verify_ssl=False))
+            connector=aiohttp.TCPConnector(verify_ssl=False)) as session:
     
         print('Fetching data for {}...'.format(battletag))
         data[PC] = await client.get_hero_stats(
@@ -27,7 +27,7 @@ def scrape(battletag):
     while timeout:      # Repeat loop if a timeout occurs
         try:
             loop = asyncio.get_event_loop()
-            data = loop.run_until_complete(testing(loop))
+            data = loop.run_until_complete(testing(loop, battletag))
             timeout = False
         except asyncio.TimeoutError:
             print("Timed out, retrying...")
